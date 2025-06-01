@@ -15,7 +15,7 @@ import argparse
 import re
 from typing import Dict, List, Optional, Any, Tuple, Set
 import concurrent.futures
-from datetime import datetime, timezone, UTC
+from datetime import datetime, timezone
 import tempfile
 import shutil
 
@@ -863,7 +863,7 @@ def main() -> int:
         output_data = {
             'validators': validators,
             'metadata': {
-                'lastUpdated': datetime.now(UTC).isoformat(),
+                'lastUpdated': datetime.now(timezone.utc).isoformat(),
                 'network': 'X1 Testnet',
                 'rpcUrl': RPC_URL,
                 'totalValidators': len(validators),
@@ -874,7 +874,7 @@ def main() -> int:
                 'averageCommission': sum(v['commission'] for v in validators) / len(validators) if validators else 0,
                 'averageStake': total_stake / len(validators) if validators else 0,
                 'averageStakeSOL': (total_stake / len(validators) / 1e9) if validators else 0,
-                'dataCollectionTime': datetime.now(UTC).isoformat(),
+                'dataCollectionTime': datetime.now(timezone.utc).isoformat(),
                 'currentSlot': get_current_slot()
             },
             'performance': {
