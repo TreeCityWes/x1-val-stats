@@ -4,8 +4,8 @@ name: Update Validator Data
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:        # Allow manual trigger
+    - cron: '*/5 * * * *'   # Every 5 minutes
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -13,90 +13,81 @@ on:
       - 'fetch_validators.py'
       - '.github/workflows/update-validators.yml'
 
+permissions:
+  contents: write
+
 jobs:
   update-validators:
     runs-on: ubuntu-latest
 
     steps:
+      # 0) Print trigger context (for debugging scheduled runs)
+      - name: Show event info
+        run: |
+          echo "Triggered by: ${{ github.event_name }}"
+          date
+
       # 1) Check out the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_TOKEN }}
 
       # 2) Set up Python 3.10
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       # 3) Download & install Solana CLI v1.18.25
       - name: Install Solana CLI (v1.18.25)
         run: |
-          # Create a directory under $HOME to hold our Solana release
           mkdir -p $HOME/solana
           cd $HOME/solana
-
-          # Download the Linux tarball for v1.18.25
-          curl -L \
-            -o solana.tar.bz2 \
-            https://github.com/solana-labs/solana/releases/download/v1.18.25/solana-release-x86_64-unknown-linux-gnu.tar.bz2
-
-          # Unpack it
+          curl -L -o solana.tar.bz2 https://github.com/solana-labs/solana/releases/download/v1.18.25/solana-release-x86_64-unknown-linux-gnu.tar.bz2
           tar -xjf solana.tar.bz2
-
-          # Find the newly‐extracted folder (it will be named "solana-release")
-          SOLANA_ROOT="$(find . -maxdepth 1 -type d -name 'solana-release*' | head -n1)"
+          SOLANA_ROOT=$(find . -maxdepth 1 -type d -name 'solana-release*' | head -n1)
           echo "$HOME/solana/${SOLANA_ROOT}/bin" >> $GITHUB_PATH
-
           cd -
 
       # 4) Verify that 'solana' is now on PATH
       - name: Verify Solana CLI
-        run: |
-          solana --version
-        # If this fails, the workflow will stop. At this point you should see:
-        #   solana-cli 1.18.25 (src:...)
-      
+        run: solana --version
+
       # 5) Configure Solana to point at the X1 testnet RPC
       - name: Configure Solana CLI
-        run: |
-          solana config set --url https://rpc.testnet.x1.xyz
+        run: solana config set --url https://rpc.testnet.x1.xyz
 
       # 6) (Optional) Create a local cache directory
       - name: Create cache directory
-        run: |
-          mkdir -p .validator_cache
+        run: mkdir -p .validator_cache
 
-      # 7) Cache existing validator data (so we only fetch when changed)
+      # 7) Cache existing validator data
       - name: Cache validator data
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .validator_cache
-          key: ${{ runner.os }}-validator-cache-${{ github.sha }}
+          key: ${{ runner.os }}-validator-cache
           restore-keys: |
-            ${{ runner.os }}-validator-cache-
+            ${{ runner.os }}-validator-cache
 
       # 8) Run the Python fetch script
       - name: Run validator fetch script
         id: fetch_validators
         run: |
-          python fetch_validators.py --fast
+          python fetch_validators.py --fast || true
         env:
-          GITHUB_OUTPUT: ${{ github.output_path }}
           RPC_URL: "https://rpc.testnet.x1.xyz"
           MAX_WORKERS: "5"
           MAX_RETRIES: "3"
           ALWAYS_EXIT_ZERO: "true"
 
-      # 9) If `fetch_validators.py` indicated changes, commit and push the updated JSON
+      # 9) Commit and push if changed
       - name: Commit and push if changed
-        if: steps.fetch_validators.outputs.validators_changed == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/TreeCityWes/x1-val-stats.git
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           mkdir -p public/data
-          git add public/data/validators.json
-          git commit -m "Update validator data [skip ci]"
-          git push -u origin main
+          git add public/data/validators.json || true
+          git diff --staged --quiet || (git commit -m "Update validator data [skip ci]" && git push origin HEAD:main)
