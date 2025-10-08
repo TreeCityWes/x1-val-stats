@@ -14538,7 +14538,7 @@
       "rootSlot": 106354163,
       "credits": 0,
       "epochCredits": 0,
-      "version": "unknown",
+      "version": "2.2.17",
       "delinquent": true,
       "skipRate": 0,
       "ipAddress": "",
@@ -14548,7 +14548,7 @@
       "rpcPort": 0,
       "slotsBehind": 288477,
       "timeBehindSeconds": 115390.8,
-      "featureSet": 0,
+      "featureSet": 628919754,
       "shredVersion": 0,
       "totalSlots": 0,
       "leaderSlots": 0,
@@ -18953,7 +18953,7 @@
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-10-08T19:20:54.813937+00:00",
+    "lastUpdated": "2025-10-08T19:34:26.759837+00:00",
     "network": "X1 Testnet",
     "rpcUrl": "https://rpc.testnet.x1.xyz",
     "totalValidators": 514,
@@ -18964,7 +18964,7 @@
     "averageCommission": 19.41634241245136,
     "averageStake": 362395852312997.1,
     "averageStakeSOL": 362395.8523129971,
-    "dataCollectionTime": "2025-10-08T19:20:54.813995+00:00",
+    "dataCollectionTime": "2025-10-08T19:34:26.759936+00:00",
     "currentSlot": 106642671
   },
   "performance": {
