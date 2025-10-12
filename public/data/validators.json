@@ -18953,7 +18953,7 @@
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-10-12T17:20:36.475657+00:00",
+    "lastUpdated": "2025-10-12T17:33:23.648642+00:00",
     "network": "X1 Testnet",
     "rpcUrl": "https://rpc.testnet.x1.xyz",
     "totalValidators": 514,
@@ -18964,7 +18964,7 @@
     "averageCommission": 19.41634241245136,
     "averageStake": 362395852312997.1,
     "averageStakeSOL": 362395.8523129971,
-    "dataCollectionTime": "2025-10-12T17:20:36.475749+00:00",
+    "dataCollectionTime": "2025-10-12T17:33:23.648732+00:00",
     "currentSlot": 106642671
   },
   "performance": {
