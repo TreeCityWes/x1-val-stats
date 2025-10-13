@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch comprehensive validator information from X1 testnet and save to JSON file.
+"""Fetch comprehensive validator information from X1 Mainnet and save to JSON file.
 This script gathers extensive data including performance metrics, network info, and more.
 """
 
@@ -27,7 +27,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Configuration from environment variables or defaults
-RPC_URL = os.environ.get("RPC_URL", "https://rpc.testnet.x1.xyz")
+RPC_URL = os.environ.get("RPC_URL", "https://rpc.mainnet.x1.xyz")
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "10"))
 CACHE_DIR = os.environ.get("CACHE_DIR", ".validator_cache")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "public/data")
@@ -772,7 +772,7 @@ def compare_output_files(original_file, new_file):
 
 def parse_args():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="Fetch comprehensive validator information from X1 testnet")
+    parser = argparse.ArgumentParser(description="Fetch comprehensive validator information from X1 Mainnet")
     parser.add_argument('--rpc-url', default=RPC_URL, help=f"RPC URL to connect to (default: {RPC_URL})")
     parser.add_argument('--max-workers', type=int, default=MAX_WORKERS, help=f"Maximum number of worker threads (default: {MAX_WORKERS})")
     parser.add_argument('--output-dir', default=OUTPUT_DIR, help=f"Directory to save output files (default: {OUTPUT_DIR})")
@@ -794,7 +794,7 @@ def main() -> int:
         MAX_WORKERS = args.max_workers
         OUTPUT_DIR = args.output_dir
     
-    logger.info("Starting comprehensive validator data collection for X1 testnet...")
+    logger.info("Starting comprehensive validator data collection for X1 Mainnet...")
     
     # Check if Solana CLI is available
     try:
@@ -864,7 +864,7 @@ def main() -> int:
             'validators': validators,
             'metadata': {
                 'lastUpdated': datetime.now(timezone.utc).isoformat(),
-                'network': 'X1 Testnet',
+                'network': 'X1 Mainnet',
                 'rpcUrl': RPC_URL,
                 'totalValidators': len(validators),
                 'activeValidators': len(active_validators),
