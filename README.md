@@ -1,10 +1,10 @@
 # X1 Validator Statistics
 
-This repository contains a script that fetches comprehensive validator data from the Solana X1 testnet using Solana CLI.
+This repository contains a script that fetches comprehensive validator data from the Solana X1 mainnet using Solana CLI.
 
 ## Features
 
-- Fetches validator information from X1 testnet
+- Fetches validator information from X1 mainnet
 - Collects metrics including stake, performance, block production, and more
 - Outputs consolidated JSON data for analysis
 - Automatically updates data via GitHub Actions
@@ -20,15 +20,15 @@ Run the script with:
 
 ```bash
 # Normal mode
-python fetch_validators.py --rpc-url https://rpc.testnet.x1.xyz
+python fetch_validators.py --rpc-url https://rpc.mainnet.x1.xyz
 
 # Fast mode (skips detailed tower statistics)
-python fetch_validators.py --rpc-url https://rpc.testnet.x1.xyz --fast
+python fetch_validators.py --rpc-url https://rpc.mainnet.x1.xyz --fast
 ```
 
 ### Options
 
-- `--rpc-url`: Specify RPC endpoint (default: https://rpc.testnet.x1.xyz)
+- `--rpc-url`: Specify RPC endpoint (default: https://rpc.mainnet.x1.xyz)
 - `--cache-dir`: Cache directory for command outputs (default: .validator_cache)
 - `--output-dir`: Output directory for JSON files (default: public/data)
 - `--fast`: Skip detailed tower statistics for faster execution
@@ -39,7 +39,7 @@ This repository includes a GitHub Actions workflow that automatically updates th
 
 ## Output
 
-The script generates a `validators.json` file containing detailed information about all validators on the X1 testnet.
+The script generates a `validators.json` file containing detailed information about all validators on the X1 mainnet.
 
 ## Environment Variables
 
