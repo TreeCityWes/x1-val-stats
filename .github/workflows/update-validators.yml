@@ -54,7 +54,7 @@ jobs:
       - name: Verify Solana CLI
         run: solana --version
 
-      # 5) Configure Solana to point at the X1 testnet RPC
+      # 5) Configure Solana to point at the X1 Mainnet RPC
       - name: Configure Solana CLI
         run: solana config set --url https://rpc.mainnet.x1.xyz
 
@@ -77,7 +77,7 @@ jobs:
         run: |
           python fetch_validators.py --fast || true
         env:
-          RPC_URL: "https://rpc.testnet.x1.xyz"
+          RPC_URL: "https://rpc.mainnet.x1.xyz"
           MAX_WORKERS: "5"
           MAX_RETRIES: "3"
           ALWAYS_EXIT_ZERO: "true"
