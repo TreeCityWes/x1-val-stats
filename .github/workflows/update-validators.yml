@@ -82,6 +82,14 @@ jobs:
           MAX_RETRIES: "3"
           ALWAYS_EXIT_ZERO: "true"
 
+      # 8.5) Merge per-validator self-stake from x1.ninja's stake-program
+      # scanner. Public RPCs disable getProgramAccounts on the Stake Program,
+      # so the runner can't compute self-stake itself; it pulls pre-computed
+      # values from x1.ninja and stamps them onto validators.json.
+      # Best-effort: a transient outage shouldn't block the data update.
+      - name: Merge Capy-Mon self-stake
+        run: python merge_selfstake.py || true
+
       # 9) Commit and push if changed
       - name: Commit and push if changed
         run: |
