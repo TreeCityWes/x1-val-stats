@@ -3818,7 +3818,7 @@
       "performanceScore": 100,
       "uptimePercent": 100,
       "infoAddress": "FvZR56F5i2ssHappvbjnEyQ4iu84BsRJH8iurGqy52oK",
-      "selfStake": 38657439380831
+      "selfStake": 2951734586323
     },
     {
       "identityPubkey": "5MrFZvmKXgYm2zjhLJdw9UYzhLD3E8FiFw4B4D4Q7fgw",
@@ -28265,7 +28265,7 @@
     "selfStake": {
       "source": "https://x1.ninja/api/capy-mon/selfstake",
       "definition": "Canonical self-stake from the X1 Foundation's official delegation API. Values are cached on this server, refreshed hourly. Indexed by validator vote pubkey.",
-      "lastUpdated": "2026-05-22T15:12:01.110Z",
+      "lastUpdated": "2026-05-22T17:12:17.201Z",
       "validatorsWithSelfStake": null,
       "validatorsWithStrictOnly": null,
       "averageLamports": null,
