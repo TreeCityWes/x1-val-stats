@@ -27273,7 +27273,7 @@
     "selfStake": {
       "source": "https://x1.ninja/api/capy-mon/selfstake",
       "definition": "Canonical self-stake from the X1 Foundation's official delegation API. Values are cached on this server, refreshed hourly. Indexed by validator vote pubkey.",
-      "lastUpdated": "2026-08-21T16:24:47.749Z",
+      "lastUpdated": "2026-08-21T17:24:56.963Z",
       "validatorsWithSelfStake": null,
       "validatorsWithStrictOnly": null,
       "averageLamports": null,
